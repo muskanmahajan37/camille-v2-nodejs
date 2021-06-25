@@ -53,3 +53,41 @@ window.onscroll = function () {
     }
     prevScrollpos = currentScrollPos;
 }
+
+
+const form = document.querySelector('.contact-form');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let name = document.querySelector('.name').value;
+    let email = document.querySelector('.email').value;
+    let message = document.querySelector('.message').value;
+
+    document.querySelector(".contact-form").reset();
+
+    if (name && email && message) {
+        sendEmail(name, email, message);
+    } else {
+        return alert('Please provide a valid input')
+    }
+})
+
+
+function sendEmail(name, email, message) {
+    Email.send({
+        SecureToken : "e3e6bf6b-ad09-4472-af06-efaacc4718d7",
+        To : 'CamilleDimpas06@gmail.com',
+        From : email,
+        Subject : `Looking for VA - ${name}`,
+        Body : `<b>Name:</b> ${name} <br/><b>Email:</b> ${email} NOTE: Please reply to this email. <br/><br/> <b>Message:</b> <br/>${message}`,
+        Attachments : [
+        {
+            name : "smtpjs.png",
+            path : "https://networkprogramming.files.wordpress.com/2017/11/smtpjs.png"
+        }]
+    }).then(
+      message => alert("message sent")
+    );
+}
+
